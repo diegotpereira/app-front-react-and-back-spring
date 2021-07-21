@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import CursoDataService from '../service/CursoDataService';
 
-const INSTUTOR = 'in28minutes'
+const INSTRUTOR = 'in28minutes'
 
 class CursoComponent extends Component {
 
@@ -19,11 +19,12 @@ class CursoComponent extends Component {
     }
 
     componentDidMount() {
+        console.log(this.state.id)
         if (this.state.id == -1) {
             return 
         }
 
-        CursoDataService.recuperarCurso(INSTRUTOR, this.state.id)
+        CursoDataService.recuperarCursos(this.state.id)
            .then(response => this.setState({
                descricao: response.data.descricao
            }))
@@ -36,7 +37,7 @@ class CursoComponent extends Component {
         } else if (values.descricao.length < 5) {
             errors.descricao = 'Entre com ultimos 5 caracters da descrição'
         }
-        return erros
+        return errors;
     }
 
     enviar(values) {
@@ -45,15 +46,16 @@ class CursoComponent extends Component {
 
         let curso = {
             id: this.state.id,
-            descricao: values.descricao
+            descricao: values.descricao,
+            targetDate: values.targetDate
         }
 
-        if (this.state === -1) {
+        if (this.state.id === -1) {
             CursoDataService.criarCurso(usuarionome, curso)
-                .then(() => this.history.push('/cursos'))
+                .then(() => this.props.history.push('/cursos'));
         } else {
-            CursoDataService.atualizarCurso(usuario, this.state.id, curso)
-                .then(()=> this.props.history.push('/cursos'))
+            CursoDataService.atualizarCurso(usuarionome, this.state.id, curso)
+                .then(()=> this.props.history.push('/cursos'));
         }
         console.log(values);
     }
@@ -61,36 +63,38 @@ class CursoComponent extends Component {
 
         let {descricao, id} = this.state
         return (
-            <div className="container">
-                <h1>Detalhes do Curso</h1>
-                <Formik 
-                     initialValues = {{id, descricao}}
-                     enviar = {this.enviar}
-                     validarMudanca = {false}
-                     validateOnBlur = {false}
-                     validar = {this.validar}
-                     habilitarReinicilizar = {true}>
-                         {
-                             (props) => (
+            <div>
+                <h3>Detalhes do Curso</h3>
+                <div className="container">
+                    <Formik 
+                        initialValues = {{id, descricao}}
+                        enviar = {this.enviar}
+                        validarMudanca = {false}
+                        validateOnBlur = {false}
+                        validar = {this.validar}
+                        habilitarReinicilizar = {true}>
+                            {
+                                (props) => (
 
-                                 <Form>
-                                     <ErrorMessage name="descricao" Component="div" className="alert alert-warning" />
-                                        <fieldset className="form-group">
-                                            <label>Id</label>
-                                            <Field className="form-control" type="text" name="id" disabled />
-                                        </fieldset>
-                                        <fieldset className="form-group">
-                                            <label>Descricao</label>
-                                            <Field className="form-control" type="text" name="descricao" />
-                                        </fieldset>
-                                        <button className="btn btn-success" type="submit">Salvaer</button>
-                                 </Form>
-                             )
-                         }
-                </Formik>
+                                    <Form>
+                                        <ErrorMessage name="descricao" component="div" className="alert alert-warning" />
+                                            <fieldset className="form-group">
+                                                <label>Id</label>
+                                                <Field className="form-control" type="text" name="id" disabled />
+                                            </fieldset>
+                                            <fieldset className="form-group">
+                                                <label>Descricao</label>
+                                                <Field className="form-control" type="text" name="descricao" />
+                                            </fieldset>
+                                            <button className="btn btn-success" type="submit">Salvar</button>
+                                    </Form>
+                                )
+                            }
+                    </Formik>
+                </div>
             </div>
             
-        )
+        );
     }
 }
 

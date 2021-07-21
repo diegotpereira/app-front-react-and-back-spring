@@ -1,6 +1,7 @@
  import React, { Component } from 'react';
 import CursoComponent from './CursoComponent';
 import ListaCursosComponent from './ListaCursosComponent';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
  class InstrutorApp extends Component {
      render() {
@@ -9,11 +10,11 @@ import ListaCursosComponent from './ListaCursosComponent';
             <Router>
                 <>
                   <h1>App de Instruções</h1>
-                  <switch>
+                  <Switch>
                       <Route path="/" exact component = {ListaCursosComponent}/>
                       <Route path="/cursos" exact component = {ListaCursosComponent}/>
                       <Route path="/cursos/:id" component = {CursoComponent} />
-                  </switch>
+                  </Switch>
                 </>
             </Router>
          )

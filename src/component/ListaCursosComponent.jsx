@@ -1,5 +1,7 @@
-import { Component } from "react";
-import CursoDataService from "../service/CursoDataService";
+import React, { Component } from 'react'
+import CursoDataService from '../service/CursoDataService';
+
+const INSTRUTOR = 'in28minutes'
 
 class ListaCursosComponent extends Component {
 
@@ -63,12 +65,12 @@ class ListaCursosComponent extends Component {
                         <tbody>
                             {
                                 this.state.cursos.map(
-                                    courso =>
+                                    curso =>
                                         <tr key={curso.id}>
                                             <td>{curso.id}</td>
                                             <td>{curso.descricao}</td>
-                                            <td><button className="btn bnt-warning" onClick={() => this.deletarCursoClicked(curso.id)}>Excluir</button></td>
-                                            <td><button className="btn btn-success" onClick={() => this.deletarCursoClicked(curso.id)}>Atualizar</button></td>
+                                            <td><button className="btn btn-warning" onClick={() => this.deletarCursoClicked(curso.id)}>Excluir</button></td>
+                                            <td><button className="btn btn-success" onClick={() => this.atualizarCursoClicked(curso.id)}>Atualizar</button></td>
                                         </tr>
                                 )
                             }
