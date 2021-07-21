@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import CursoDataService from '../service/CursoDataService';
 
-const INSTRUTOR = 'in28minutes'
 
 class CursoComponent extends Component {
 
@@ -20,7 +19,7 @@ class CursoComponent extends Component {
 
     componentDidMount() {
         console.log(this.state.id)
-        if (this.state.id == -1) {
+        if (this.state.id === -1) {
             return 
         }
 
@@ -42,7 +41,7 @@ class CursoComponent extends Component {
 
     enviar(values) {
         
-        let usuarionome = INSTRUTOR
+        let usuarionome = usuarionome
 
         let curso = {
             id: this.state.id,

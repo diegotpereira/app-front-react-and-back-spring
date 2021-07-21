@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import CursoDataService from '../service/CursoDataService';
 
-const INSTRUTOR = 'in28minutes'
-
 class ListaCursosComponent extends Component {
 
     constructor(props){
@@ -20,7 +18,7 @@ class ListaCursosComponent extends Component {
     }
 
     refreshCursos() {
-        CursoDataService.recuperarTodosCursos(INSTRUTOR)
+        CursoDataService.recuperarTodosCursos()
             .then(
                 response => {
                     //console.log(response);
@@ -30,7 +28,7 @@ class ListaCursosComponent extends Component {
     }
 
     deletarCursoClicked(id) {
-        CursoDataService.deletarCurso(INSTRUTOR, id)
+        CursoDataService.deletarCurso(id)
           .then(
               response => {
                   this.setState({message : `O Curso de ${id} foi excluído com sucesso!.`})
@@ -69,8 +67,8 @@ class ListaCursosComponent extends Component {
                                         <tr key={curso.id}>
                                             <td>{curso.id}</td>
                                             <td>{curso.descricao}</td>
-                                            <td><button className="btn btn-warning" onClick={() => this.deletarCursoClicked(curso.id)}>Excluir</button></td>
                                             <td><button className="btn btn-success" onClick={() => this.atualizarCursoClicked(curso.id)}>Atualizar</button></td>
+                                            <td><button className="btn btn-warning" onClick={() => this.deletarCursoClicked(curso.id)}>Excluir</button></td>
                                         </tr>
                                 )
                             }
